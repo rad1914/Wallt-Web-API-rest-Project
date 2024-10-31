@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Bot Interface</title>
+    
+    <!-- Importing Modular CSS Files -->
+    <link rel="stylesheet" href="global.css">
+    <link rel="stylesheet" href="animations.css">
+    <link rel="stylesheet" href="responsive.css">
+    <link rel="stylesheet" href="layout.css">
+    <link rel="stylesheet" href="components.css">
+    <link rel="stylesheet" href="messages.css">
+    <link rel="stylesheet" href="input-output.css">
+    <link rel="stylesheet" href="buttons.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Fixed Welcome Section -->
+        <div class="welcome-section" id="welcomeSection">
+            <div class="bot-image animate-image">
+                <img src="bot.png" alt="Bot">
+            </div>
+            <h2 class="help-title" id="writingTitle">✦</h2>
+            <div class="help-buttons">
+                <button class="help-button animate-button" onclick="sendButtonMessage('Integra (2x)²')">🧮 Integra (2x)²</button>
+                <button class="help-button animate-button" onclick="sendButtonMessage('Contesta mi examen')">🧭 Contesta mi examen</button>
+                <button class="help-button animate-button" onclick="sendButtonMessage('¿Qué es Gauss-Jordan?')">📊 ¿Qué es Gauss-Jordan?</button>
+                <button class="help-button animate-button" onclick="sendButtonMessage('Haz un resumen')">✏️ Haz un resumen</button>
+                <button class="help-button animate-button" onclick="sendButtonMessage('Juguemos a algo')">🕹️ Juguemos a algo</button>
+                <button class="help-button animate-button" onclick="sendButtonMessage('¿Que puedes hacer?')">💬 Más</button>
+            </div>
+        </div>
+
+        <!-- Conversation Area -->
+        <div class="conversation" id="conversation">
+            <!-- Messages will be added dynamically here -->
+            <button class="new-chat-button" onclick="startNewChat()">+</button>
+        </div>
+
+        <!-- Input Field (fixed at the bottom) -->
+        <div class="input-container">
+            <input type="text" id="messageInput" class="input-field" placeholder="Escribe aquí..." onkeydown="sendMessage(event)">
+        </div>
+
+        <!-- Footer with version info -->
+        <div class="caption">WebV Branch debug Artifact (68cadb) BETA<br>Created by Sr. RAD - TECNM</div>
+        
+        <div id="responseOutput"></div>
+    </div>
+
+    <!-- Import JavaScript Modules -->
+    <script type="module">
+        import { startNewChat } from './chatInit.js';
+        import { sendMessage } from './messageHandler.js';
+        import { sendButtonMessage } from './buttonMessage.js';
+
+        // Assign functions globally for HTML
+        window.startNewChat = startNewChat;
+        window.sendMessage = sendMessage;
+        window.sendButtonMessage = sendButtonMessage;
+    </script>
+    
+    <!-- Animation Script -->
+    <script type="module" src="animators.js"></script>
+</body>
+</html>
