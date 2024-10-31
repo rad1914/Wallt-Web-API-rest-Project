@@ -39,7 +39,7 @@ async function sendMessage(event) {
         const conversation = document.getElementById('conversation');
         conversation.innerHTML += `<div class="message user">${message}</div>`;
 
-        document.getElementById('responseOutput').innerText = "Processing...";
+        document.getElementById('responseOutput').innerText = "Procesando...";
 
         // Ocultar la sección de bienvenida
         const welcomeSection = document.getElementById('welcomeSection');

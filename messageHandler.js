@@ -8,41 +8,53 @@ export async function sendMessage(event) {
             return;
         }
 
-        // Prepare the message for the server
-        let serverMessage = message;
-        if (!message.startsWith('/')) {
-            serverMessage = `.ai ${message}`; // Prepend ".ai" to the message
-        }
-
-        messageInput.value = '';
+        // Prepare message for the server
+        let serverMessage = message.startsWith('/') ? message : `.ai ${message}`;
+        messageInput.value = ''; // Clear input field
         const conversation = document.getElementById('conversation');
-        
-        // Display the original message in the conversation
-        conversation.innerHTML += `<div class="message user">${message}</div>`;
+
+        // Display the user's message in the conversation
+        if (conversation) {
+            conversation.innerHTML += `<div class="message user">${message}</div>`;
+        }
         document.getElementById('responseOutput').innerText = "Processing...";
 
+        // Log the final message to be sent
+        console.log("Final message to server:", serverMessage);
+
+        // Hide welcome section and display new chat button
         const welcomeSection = document.getElementById('welcomeSection');
         if (welcomeSection) {
             welcomeSection.style.display = 'none';
         }
 
+        // Check for new-chat-button existence
         const newChatButton = document.querySelector('.new-chat-button');
-        newChatButton.classList.add('show-button');
+        if (newChatButton) {
+            newChatButton.classList.add('show-button');
+        }
 
-        // Log the final message to be sent to the server
-        console.log("Final message to server:", serverMessage);
+        // Record start time
+        const startTime = Date.now();
 
         try {
+            // Send request to the server
             const response = await fetch('http://22.ip.gl.ply.gg:20927/api/message', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ message: serverMessage }), // Send modified message
+                body: JSON.stringify({ message: serverMessage }),
             });
 
-            const data = await response.json();
+            // Calculate response time
+            const endTime = Date.now();
+            const responseTime = endTime - startTime;
+            console.log(`Response time: ${responseTime} ms`);
 
+            const data = await response.json();
             if (data.response) {
-                conversation.innerHTML += `<div class="message bot">${data.response}</div>`;
+                if (conversation) {
+                    conversation.innerHTML += `<div class="message bot">${data.response}</div>`;
+                }
             } else {
                 document.getElementById('responseOutput').innerText = "Error: Respuesta vacía del servidor.";
             }
@@ -52,6 +64,9 @@ export async function sendMessage(event) {
             document.getElementById('responseOutput').innerText = 'Error: No se pudo enviar el mensaje. Inténtalo más tarde.';
         }
 
-        conversation.scrollTop = conversation.scrollHeight;
+        // Scroll to the latest message if conversation exists
+        if (conversation) {
+            conversation.scrollTop = conversation.scrollHeight;
+        }
     }
 }
