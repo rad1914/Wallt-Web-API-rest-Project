@@ -41,7 +41,7 @@ export async function sendMessage(event) {
 
         try {
             // Send request to the server
-            const response = await fetch('http://22.ip.gl.ply.gg:20927/api/message', {
+                        const response = await fetch('https://163b-2806-102e-19-594c-f68e-38ff-fea7-6ac4.ngrok-free.app/api/message', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ message: serverMessage }),
