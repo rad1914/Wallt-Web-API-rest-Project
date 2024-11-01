@@ -41,7 +41,7 @@ export async function sendMessage(event) {
 
         try {
             // Send request to the server
-            const response = await fetch('http://22.ip.gl.ply.gg:20927/api/message', {
+            const response = await fetch('https://22.ip.gl.ply.gg:20927/api/message', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ message: serverMessage }),
