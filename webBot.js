@@ -19,8 +19,6 @@ function startNewChat() {
     document.getElementById('messageInput').value = '';
 }
 
-
-
 // Función asíncrona para enviar un mensaje al presionar 'Enter' o hacer clic en un botón
 async function sendMessage(event) {
     if (event.key === 'Enter' || event.type === 'click') {
@@ -60,31 +58,33 @@ async function sendMessage(event) {
                 body: JSON.stringify({ message: message }), // Aquí se usa la sintaxis correcta
             });
 
-            const data = await response.json();
+            if (response.ok) {  // Verificar si la respuesta es exitosa
+                const data = await response.json();
 
-            if (data.response) {
-                conversation.innerHTML += `
-                    <div class="message bot">
-                        <img src="bot.png" alt="Bot" class="bot-image">
-                        <span>${data.response}</span>
-                    </div>`;
+                if (data.response) {
+                    conversation.innerHTML += `
+                        <div class="message bot">
+                            <img src="bot.png" alt="Bot" class="bot-image">
+                            <span>${data.response}</span>
+                        </div>`;
+                } else {
+                    document.getElementById('responseOutput').innerText = "Error: Respuesta vacía del servidor.";
+                }
+
+                // Desplazar el área de conversación al último mensaje
+                conversation.scrollTop = conversation.scrollHeight;
+
             } else {
-                document.getElementById('responseOutput').innerText = "Error: Respuesta vacía del servidor.";
+                console.error('Error en la respuesta del servidor:', response.statusText);
+                document.getElementById('responseOutput').innerText = 'Error: Respuesta no exitosa del servidor.';
             }
 
         } catch (error) {
             console.error('Error sending message:', error);
             document.getElementById('responseOutput').innerText = 'Error: No se pudo enviar el mensaje. Inténtalo más tarde.';
         }
-
-        conversation.scrollTop = conversation.scrollHeight;
     }
 }
-
-
-
-
-
 
 // Función para enviar un mensaje al hacer clic en un botón con texto predefinido
 function sendButtonMessage(message) {
