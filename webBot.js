@@ -38,7 +38,7 @@ async function sendMessage(event) {
         // Mostrar el mensaje del usuario
         const conversation = document.getElementById('conversation');
         conversation.innerHTML += `<div class="message user">${message}</div>`;
-
+        
         document.getElementById('responseOutput').innerText = "Procesando...";
 
         // Ocultar la sección de bienvenida
@@ -47,7 +47,7 @@ async function sendMessage(event) {
             welcomeSection.style.display = 'none';
         }
 
-        // Mostrar el botón "Nuevo Chat" con animación
+        // Mostrar el botón de "Nuevo Chat" con animación
         const newChatButton = document.querySelector('.new-chat-button');
         newChatButton.classList.add('show-button');
 
@@ -57,13 +57,17 @@ async function sendMessage(event) {
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ message: message }),
+                body: JSON.stringify({ message: message }), // Aquí se usa la sintaxis correcta
             });
 
             const data = await response.json();
 
             if (data.response) {
-                conversation.innerHTML += `<div class="message bot">${data.response}</div>`;
+                conversation.innerHTML += `
+                    <div class="message bot">
+                        <img src="bot.png" alt="Bot" class="bot-image">
+                        <span>${data.response}</span>
+                    </div>`;
             } else {
                 document.getElementById('responseOutput').innerText = "Error: Respuesta vacía del servidor.";
             }
@@ -76,6 +80,8 @@ async function sendMessage(event) {
         conversation.scrollTop = conversation.scrollHeight;
     }
 }
+
+
 
 
 
