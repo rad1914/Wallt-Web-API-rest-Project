@@ -52,20 +52,20 @@
     <div id="responseOutput"></div>
 </div>
 
+<!-- Import JavaScript Modules -->
+<script type="module">
+    import { startNewChat } from './js/chatInit.js';
+    import { sendMessage } from './js/messageHandler.js';
+    import { sendButtonMessage } from './js/buttonMessage.js';
 
-    <!-- Import JavaScript Modules -->
-    <script type="module">
-        import { startNewChat } from './chatInit.js';
-        import { sendMessage } from './messageHandler.js';
-        import { sendButtonMessage } from './buttonMessage.js';
+    // Assign functions globally for HTML
+    window.startNewChat = startNewChat;
+    window.sendMessage = sendMessage;
+    window.sendButtonMessage = sendButtonMessage;
+</script>
 
-        // Assign functions globally for HTML
-        window.startNewChat = startNewChat;
-        window.sendMessage = sendMessage;
-        window.sendButtonMessage = sendButtonMessage;
-    </script>
-    
-    <!-- Animation Script -->
-    <script type="module" src="animators.js"></script>
+<!-- Animation Script -->
+<script type="module" src="./js/animators.js"></script>
 </body>
 </html>
+
